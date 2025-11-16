@@ -24,8 +24,8 @@ Smart attendance + live location tracking using browser geolocation and a config
 
 ## How to run
 
+1. Create virtual environment
 ```bash
-# 1. Create virtual environment
 python -m venv venv
 ```
 
