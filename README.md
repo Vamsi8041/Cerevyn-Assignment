@@ -41,12 +41,12 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 ```
-# 3. Initialize database + default geo-fence
+3. Initialize database + default geo-fence
 ```bash
 
 flask --app app.py init-db
 ```
-# 4. Run dev server
+4. Run dev server
 ```bash
 
 python app.py
