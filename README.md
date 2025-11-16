@@ -35,16 +35,20 @@ venv\Scripts\activate
 # Linux/macOS:
 source venv/bin/activate
 ```
+
+2. Install dependencies
 ```bash
-# 2. Install dependencies
+
 pip install -r requirements.txt
 ```
-```bash
 # 3. Initialize database + default geo-fence
+```bash
+
 flask --app app.py init-db
 ```
-```bash
 # 4. Run dev server
+```bash
+
 python app.py
 ```
 
