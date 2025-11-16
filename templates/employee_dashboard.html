@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- CAMERA MODAL -->
+
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="h5 mb-3">Today · {{ today.strftime('%d %b %Y') }}</h2>
+                <p class="text-muted small mb-3">
+                    Allow location access in your browser to mark attendance.
+                </p>
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <button class="btn btn-success" id="btn-checkin">
+                        ✅ Check-In
+                    </button>
+                    <button class="btn btn-outline-danger" id="btn-checkout">
+                        ⏹ Check-Out
+                    </button>
+                    <button class="btn btn-outline-secondary" id="btn-track">
+                        🛰 Start Live Tracking
+                    </button>
+                </div>
+                <div id="attendance-status" class="alert alert-info small mb-0">
+                    {% if attendance_today %}
+                        {% if attendance_today.check_in_time %}
+                            Checked in at {{ attendance_today.check_in_time.strftime('%H:%M') }} UTC.
+                        {% else %}
+                            Not checked in yet.
+                        {% endif %}
+                        {% if attendance_today.check_out_time %}
+                            <br>Checked out at {{ attendance_today.check_out_time.strftime('%H:%M') }} UTC.
+                        {% endif %}
+                    {% else %}
+                        No attendance marked yet for today.
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="h6 mb-3">Office Geo-Fence</h2>
+                {% if geofence %}
+                    <p class="small text-muted">
+                        <strong>{{ geofence.name }}</strong><br>
+                        Lat: {{ '%.5f'|format(geofence.center_lat) }},
+                        Lng: {{ '%.5f'|format(geofence.center_lng) }}<br>
+                        Radius: {{ geofence.radius_m|int }} m
+                    </p>
+                    <div id="map-employee" class="rounded" style="height: 260px;"></div>
+                {% else %}
+                    <p class="text-muted small">
+                        Geo-fence not configured yet. Contact admin.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-lg-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h6 mb-3">Recent attendance</h2>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Check-In</th>
+                            <th>Check-Out</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for a in recent_attendance %}
+                            <tr>
+                                <td>{{ a.date.strftime('%d %b %Y') }}</td>
+                                <td>
+                                    {% if a.check_in_time %}
+                                        {{ a.check_in_time.strftime('%H:%M') }} UTC
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if a.check_out_time %}
+                                        {{ a.check_out_time.strftime('%H:%M') }} UTC
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>{{ a.status or '-' }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-muted small">No attendance records yet.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="cameraModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-2">
+      <h5 class="text-center">Capture Photo</h5>
+      <video id="cameraStream" autoplay playsinline style="width:100%; border-radius:10px;"></video>
+      <canvas id="cameraCanvas" style="display:none;"></canvas>
+
+      <div class="d-grid mt-2">
+        <button class="btn btn-success" id="captureBtn">📸 Capture</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    window.GEOFENCE_EMPLOYEE = {
+        hasGeofence: {{ 'true' if geofence else 'false' }},
+        centerLat: {{ geofence.center_lat if geofence else 'null' }},
+        centerLng: {{ geofence.center_lng if geofence else 'null' }},
+        radiusM: {{ geofence.radius_m if geofence else 'null' }}
+    };
+</script>
+{% endblock %}

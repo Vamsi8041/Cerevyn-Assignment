@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h5 mb-3">Configure Geo-Fence</h2>
+                <p class="small text-muted">
+                    Set your office center point and allowed radius in meters.
+                    You can click on the map to auto-fill latitude and longitude.
+                </p>
+                <form method="post" class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Name</label>
+                        <input class="form-control" type="text" name="name"
+                               value="{{ geofence.name if geofence else 'Office' }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Lat</label>
+                        <input class="form-control" type="text" name="center_lat" id="gf-lat"
+                               value="{{ geofence.center_lat if geofence else '' }}" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Lng</label>
+                        <input class="form-control" type="text" name="center_lng" id="gf-lng"
+                               value="{{ geofence.center_lng if geofence else '' }}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Radius (m)</label>
+                        <input class="form-control" type="number" name="radius_m"
+                               value="{{ geofence.radius_m if geofence else 150 }}" min="10" required>
+                    </div>
+                    <div class="col-md-8 d-flex align-items-end justify-content-end">
+                        <button class="btn btn-primary" type="submit">Save Geo-Fence</button>
+                    </div>
+                </form>
+                <hr>
+                <div id="map-config" style="height: 320px;" class="rounded"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.GEOFENCE_CONFIG = {
+        hasGeofence: {{ 'true' if geofence else 'false' }},
+        centerLat: {{ geofence.center_lat if geofence else '17.385044' }},
+        centerLng: {{ geofence.center_lng if geofence else '78.486671' }},
+        radiusM: {{ geofence.radius_m if geofence else 150 }}
+    };
+</script>
+{% endblock %}
