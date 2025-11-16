@@ -49,6 +49,10 @@ Then open: http://127.0.0.1:5000/
 > **Important:** When you first open the app, go to **Register** and create the first user.
 > That account becomes **Admin** automatically.
 
+
+![Dashboard Screenshot](photos/Screenshot 2025-11-16 221853.png)
+
+
 ## Demo Flow
 
 1. **Admin**
