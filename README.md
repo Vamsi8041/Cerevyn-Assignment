@@ -50,7 +50,7 @@ Then open: http://127.0.0.1:5000/
 > That account becomes **Admin** automatically.
 
 
-![Dashboard Screenshot](photos/Screenshot 2025-11-16 221853.png)
+![Dashboard Screenshot](https://github.com/Vamsi8041/Cerevyn-Assignment/blob/7b13e64f6d1d2b2ec4bc9b9697dc5ddbc3a1aad3/photos/Screenshot%202025-11-16%20221853.png)
 
 
 ## Demo Flow
