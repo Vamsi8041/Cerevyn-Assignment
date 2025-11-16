@@ -75,8 +75,3 @@ Then open: http://127.0.0.1:5000/
 - For demo, we use **SQLite** (`geofence_attendance.db`) in the project folder.
 - All times are stored in **UTC**.
 - Geo-fence default center is set to Hyderabad – you can change it from the UI.
-
-You can now extend this base:
-- Add CSV export for attendance logs
-- Add email/SMS alerts when user moves out of fence
-- Integrate with your HRMS or payroll
