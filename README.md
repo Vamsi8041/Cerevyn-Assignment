@@ -27,20 +27,24 @@ Smart attendance + live location tracking using browser geolocation and a config
 ```bash
 # 1. Create virtual environment
 python -m venv venv
+```
+
+```bash
 # Windows:
 venv\Scripts\activate
 # Linux/macOS:
 source venv/bin/activate
-
+```
+```bash
 # 2. Install dependencies
 pip install -r requirements.txt
-
+```
+```bash
 # 3. Initialize database + default geo-fence
 flask --app app.py init-db
-
+```
+```bash
 # 4. Run dev server
-flask --app app.py run
-# Or:
 python app.py
 ```
 
